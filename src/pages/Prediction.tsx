@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Activity, Heart, AlertCircle, Droplets, Gauge, HeartPulse as Pulse, Dumbbell, Scale, Ruler, Wine, Cigarette } from 'lucide-react';
 import { predictHeartDisease, calculateBMI, calculateBPCategory } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 
 export default function Prediction() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const [formData, setFormData] = useState({
     age: '',
     gender: '',
@@ -25,6 +26,47 @@ export default function Prediction() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Load profile data if user is logged in
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (user) {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+
+          if (error) throw error;
+
+          if (data) {
+            setFormData(prev => ({
+              ...prev,
+              age: data.age || '',
+              gender: data.gender || '',
+              height_cm: data.height_cm || '',
+              weight_kg: data.weight_kg || '',
+              bmi: data.bmi || '',
+              systolic_bp: data.systolic_bp || '',
+              diastolic_bp: data.diastolic_bp || '',
+              bp_category: data.bp_category || '',
+              smoking_status: data.smoking_status || '',
+              alcohol_consumption: data.alcohol_consumption || '',
+              physical_activity: data.physical_activity || '',
+              cholesterol_level: data.cholesterol_level || '',
+              blood_sugar: data.blood_sugar || '',
+              family_history: data.family_history || false
+            }));
+          }
+        } catch (err) {
+          console.error('Error loading profile:', err);
+        }
+      }
+    };
+
+    loadProfile();
+  }, [user]);
+
   useEffect(() => {
     if (formData.height_cm && formData.weight_kg) {
       const bmi = calculateBMI(Number(formData.weight_kg), Number(formData.height_cm));
@@ -39,51 +81,63 @@ export default function Prediction() {
     }
   }, [formData.systolic_bp, formData.diastolic_bp]);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setError('');
-
-  //   try {
-  //     const result = await predictHeartDisease({
-  //       ...formData,
-  //       userId: user?.id,
-  //       age: Number(formData.age),
-  //       height_cm: Number(formData.height_cm),
-  //       weight_kg: Number(formData.weight_kg),
-  //       bmi: Number(formData.bmi),
-  //       systolic_bp: Number(formData.systolic_bp),
-  //       diastolic_bp: Number(formData.diastolic_bp),
-  //       bp_category: Number(formData.bp_category),
-  //       cholesterol_level: Number(formData.cholesterol_level),
-  //       blood_sugar: Number(formData.blood_sugar),
-  //       family_history: Boolean(formData.family_history)
-  //     });
-  //     setPrediction(result.prediction);
-  //   } catch (err) {
-  //     setError('Failed to get prediction. Please try again.');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-  
+
     try {
+      // Save profile data first
+      await saveProfileData();
+      
+      // Then get prediction
       const result = await predictHeartDisease(formData);
       setPrediction(result.risk_score);
     } catch (err) {
       setError('Failed to get prediction. Please try again.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
-  
 
+  const saveProfileData = async () => {
+    if (!user) return;
+
+    try {
+      const profileData = {
+        age: formData.age ? Number(formData.age) : null,
+        gender: formData.gender,
+        height_cm: formData.height_cm ? Number(formData.height_cm) : null,
+        weight_kg: formData.weight_kg ? Number(formData.weight_kg) : null,
+        bmi: formData.bmi ? Number(formData.bmi) : null,
+        systolic_bp: formData.systolic_bp ? Number(formData.systolic_bp) : null,
+        diastolic_bp: formData.diastolic_bp ? Number(formData.diastolic_bp) : null,
+        bp_category: formData.bp_category ? Number(formData.bp_category) : null,
+        smoking_status: formData.smoking_status,
+        alcohol_consumption: formData.alcohol_consumption,
+        physical_activity: formData.physical_activity,
+        cholesterol_level: formData.cholesterol_level ? Number(formData.cholesterol_level) : null,
+        blood_sugar: formData.blood_sugar ? Number(formData.blood_sugar) : null,
+        family_history: formData.family_history,
+        updated_at: new Date().toISOString()
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: user.id,
+          ...profileData
+        });
+
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      throw err;
+    }
+  };
+
+  // ... rest of your component code remains the same ...
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
@@ -102,6 +156,9 @@ export default function Prediction() {
       default: return 'Not calculated';
     }
   };
+
+ 
+
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
