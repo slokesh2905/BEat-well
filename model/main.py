@@ -47,7 +47,9 @@ def predict(data: InputData):
 
     return {"risk_score": float(probability)}
 
-
+@app.get("/")
+def read_root():
+    return {"message": "Service is up and running!"}
 
 
 # from fastapi import FastAPI
