@@ -7,13 +7,16 @@ import numpy as np
 app = FastAPI()
 
 # Allow frontend access (adjust origin in production)
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Set to your frontend domain in production
+    allow_origins=["*"],  # Replace "*" with specific domains for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Load model and scaler
 model = joblib.load("xgb_model.pkl")
