@@ -69,6 +69,42 @@ const diseases = {
       'Regular exercise'
     ],
     image: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&q=80&w=800'
+  },
+  'heart-valve-disease': {
+    title: 'Heart Valve Disease',
+    description: 'A condition where one or more of the heart valves don\'t work properly, affecting blood flow through the heart.',
+    severity: 'Moderate to High',
+    symptoms: [
+      'Shortness of breath',
+      'Fatigue',
+      'Swollen ankles or feet',
+      'Irregular heartbeat',
+      'Chest pain',
+      'Dizziness or fainting'
+    ],
+    causes: [
+      'Aging',
+      'Congenital heart defects',
+      'Infections (endocarditis)',
+      'Rheumatic fever',
+      'High blood pressure',
+      'Coronary artery disease'
+    ],
+    treatments: [
+      'Medications',
+      'Valve repair surgery',
+      'Valve replacement surgery',
+      'Balloon valvuloplasty',
+      'Lifestyle changes'
+    ],
+    prevention: [
+      'Regular heart check-ups',
+      'Maintain healthy blood pressure',
+      'Treat infections promptly',
+      'Healthy diet and exercise',
+      'Avoid smoking'
+    ],
+    image: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&q=80&w=800'
   }
   // Add more diseases as needed
 };

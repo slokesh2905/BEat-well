@@ -69,8 +69,9 @@ export const predictHeartDisease = async (formData: any) => {
     family_history: formData.family_history ? 1 : 0,
   };
 
-  const res = await axios.post('https://beat-well.onrender.com/predict', payload);
+  const res = await axios.post('https://beat-well-aws.onrender.com/predict', payload);
   return res.data;
+  
 };
 
 

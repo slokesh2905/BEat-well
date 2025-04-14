@@ -1,165 +1,111 @@
-import React, { useState } from 'react';
-import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+import React from 'react';
+import { MapPin, Phone, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-interface Doctor {
-  name: string;
-  specialty: string;
-  location: string;
-  phone: string;
-  email: string;
-  image: string;
-  distance: string;
-  city: string;
-}
-
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
-};
-
 export default function Consultation() {
-  const [location, setLocation] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>('all');
-  
-  const doctors: Doctor[] = [
-    {
-      name: "Dr. Priya Sharma",
-      specialty: "Cardiologist",
-      location: "Apollo Hospital, Bandra West",
-      phone: "+91 98765 43210",
-      email: "priya.sharma@apollo.com",
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300&h=300",
-      distance: "2.5 km",
-      city: "Mumbai"
-    },
-    {
-      name: "Dr. Rajesh Kumar",
-      specialty: "Cardiac Surgeon",
-      location: "Max Healthcare, Saket",
-      phone: "+91 98765 43211",
-      email: "rajesh.kumar@max.com",
-      image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300&h=300",
-      distance: "3.1 km",
-      city: "Delhi"
-    },
-    {
-      name: "Dr. Anjali Desai",
-      specialty: "Cardiologist",
-      location: "Fortis Hospital, Bannerghatta Road",
-      phone: "+91 98765 43212",
-      email: "anjali.desai@fortis.com",
-      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=300&h=300",
-      distance: "1.8 km",
-      city: "Bangalore"
-    },
-    {
-      name: "Dr. Suresh Reddy",
-      specialty: "Interventional Cardiologist",
-      location: "Care Hospitals, Banjara Hills",
-      phone: "+91 98765 43213",
-      email: "suresh.reddy@care.com",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300",
-      distance: "4.2 km",
-      city: "Hyderabad"
-    },
-    {
-      name: "Dr. Meera Patel",
-      specialty: "Cardiac Surgeon",
-      location: "Kokilaben Hospital, Andheri West",
-      phone: "+91 98765 43214",
-      email: "meera.patel@kokilaben.com",
-      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300",
-      distance: "3.5 km",
-      city: "Mumbai"
-    }
-  ];
-
-  const filteredDoctors = selectedCity === 'all' 
-    ? doctors 
-    : doctors.filter(doctor => doctor.city === selectedCity);
-
-  const cities = ['all', ...new Set(doctors.map(doctor => doctor.city))];
-
   return (
-    <div className="space-y-8">
-      <motion.section 
-        className="text-center space-y-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="text-4xl font-bold text-gray-900">Find Nearby Doctors</h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Connect with experienced cardiologists in your area
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold mb-4">Find Cardiologists Near You</h1>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Locate top-rated cardiologists in your area for consultations, check-ups, and specialized heart care.
         </p>
-      </motion.section>
+      </div>
 
-      <div className="max-w-4xl mx-auto">
-        <div className="flex gap-4 mb-8">
-          <select
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-            className="flex-1 p-3 border rounded-lg focus:ring-2 focus:ring-red-500"
+      <div className="text-center mb-10">
+        <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+          <div className="flex items-center justify-center mb-6">
+            <div className="bg-red-100 p-3 rounded-full">
+              <MapPin className="h-8 w-8 text-red-500" />
+            </div>
+          </div>
+          <h3 className="text-xl font-semibold mb-4">We're Expanding Our Network!</h3>
+          <p className="text-gray-600 mb-6">
+            We are currently working on expanding our network of cardiologists across India. 
+            Meanwhile, you can find and connect with qualified heart specialists in your area through our trusted partner.
+          </p>
+          <motion.a
+            href="https://www.drdata.in/cardiologists.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {cities.map(city => (
-              <option key={city} value={city}>
-                {city === 'all' ? 'All Cities' : city}
-              </option>
-            ))}
-          </select>
+            <span>Find Cardiologists on DrData</span>
+            <ExternalLink className="h-4 w-4" />
+          </motion.a>
+          <p className="text-sm text-gray-500 mt-4">
+            DrData maintains a comprehensive directory of over 150 verified cardiologists across India
+          </p>
         </div>
+      </div>
 
-        <div className="space-y-6">
-          {filteredDoctors.map((doctor, index) => (
-            <motion.div 
-              key={index} 
-              className="bg-white p-6 rounded-lg shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-start space-x-4">
-                <img
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="w-24 h-24 rounded-lg object-cover"
-                />
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold">{doctor.name}</h3>
-                  <p className="text-gray-600">{doctor.specialty}</p>
-                  <div className="mt-2 space-y-2">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="h-4 w-4 mr-2" />
-                      <span>{doctor.location}</span>
-                      <span className="ml-2 text-sm text-red-500">({doctor.distance})</span>
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Phone className="h-4 w-4 mr-2" />
-                      <a href={`tel:${doctor.phone}`} className="hover:text-red-500">{doctor.phone}</a>
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Mail className="h-4 w-4 mr-2" />
-                      <a href={`mailto:${doctor.email}`} className="hover:text-red-500">{doctor.email}</a>
-                    </div>
-                  </div>
-                </div>
-                <motion.a
-                  href="#"
-                  className="flex items-center text-red-500 hover:text-red-600"
-                  whileHover={{ scale: 1.05 }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(`https://maps.google.com/?q=${encodeURIComponent(doctor.location)}`, '_blank');
-                  }}
-                >
-                  <ExternalLink className="h-5 w-5 mr-1" />
-                  <span>View on Map</span>
-                </motion.a>
+      <div className="bg-red-50 rounded-lg p-6 mb-10">
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 bg-red-100 p-3 rounded-full">
+            <Phone className="h-6 w-6 text-red-500" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-2">Need immediate assistance?</h3>
+            <p className="mb-4">
+              Call our emergency helpline numbers for immediate medical assistance or to connect with a cardiac specialist.
+            </p>
+            <div className="space-y-2">
+              <div className="flex items-center">
+                <span className="text-xl font-bold text-red-500">102</span>
+                <span className="text-sm text-gray-500 ml-3">(Ambulance Services)</span>
               </div>
-            </motion.div>
+              <div className="flex items-center">
+                <span className="text-xl font-bold text-red-500">108</span>
+                <span className="text-sm text-gray-500 ml-3">(Emergency Medical Services)</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-xl font-bold text-red-500">1800-180-1104</span>
+                <span className="text-sm text-gray-500 ml-3">(National Heart Institute Helpline)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="text-center mb-10">
+        <h2 className="text-2xl font-bold mb-4">Find the Right Heart Specialist</h2>
+        <p className="text-gray-600 mb-6 max-w-3xl mx-auto">
+          Different cardiac specialists focus on different aspects of heart health. Understanding these specialties can help you find the right doctor for your specific needs.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
+          {[
+            {
+              title: "General Cardiologist",
+              description: "Diagnoses and treats common heart conditions including coronary artery disease, heart failure, and valve problems."
+            },
+            {
+              title: "Interventional Cardiologist",
+              description: "Performs minimally invasive procedures like stent placements and balloon angioplasties."
+            },
+            {
+              title: "Electrophysiologist",
+              description: "Specializes in heart rhythm disorders and treatments like pacemakers and ablation procedures."
+            },
+            {
+              title: "Cardiac Surgeon",
+              description: "Performs surgical procedures like bypass surgeries, valve repairs or replacements, and heart transplants."
+            },
+            {
+              title: "Preventive Cardiologist",
+              description: "Focuses on preventing heart disease through risk assessment, lifestyle changes, and medication management."
+            },
+            {
+              title: "Pediatric Cardiologist",
+              description: "Specializes in heart conditions affecting infants, children, and adolescents, including congenital heart defects."
+            }
+          ].map((specialty, index) => (
+            <div key={index} className="bg-white p-4 rounded-lg shadow-md">
+              <h3 className="font-semibold mb-2">{specialty.title}</h3>
+              <p className="text-sm text-gray-600">{specialty.description}</p>
+            </div>
           ))}
         </div>
       </div>

@@ -1,5 +1,15 @@
 import React from 'react';
-import { Heart, Utensils, Scaling as Walking, Moon, Coffee, Cigarette } from 'lucide-react';
+import { 
+  Heart, 
+  Utensils, 
+  Dumbbell, 
+  Clock, 
+  Moon, 
+  Calendar, 
+  CheckCircle, 
+  Activity,
+  XCircle
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const fadeIn = {
@@ -8,156 +18,260 @@ const fadeIn = {
   transition: { duration: 0.6 }
 };
 
-export default function Remedies() {
-  const indianFoods = [
-    {
-      name: "Oats Dalia",
-      benefits: ["Rich in fiber", "Reduces cholesterol", "Heart-healthy"],
-      recipe: "Cook dalia with vegetables and spices. Add oats for extra nutrition.",
-      image: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&q=80&w=300"
-    },
-    {
-      name: "Ragi Porridge",
-      benefits: ["High in calcium", "Controls blood pressure", "Rich in antioxidants"],
-      recipe: "Cook ragi flour in water, add milk and jaggery for sweetness.",
-      image: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&q=80&w=300"
-    },
-    {
-      name: "Spinach Dal",
-      benefits: ["Iron-rich", "Protein-packed", "Low-fat"],
-      recipe: "Cook dal with spinach, garlic, and spices. Serve with brown rice.",
-      image: "https://images.unsplash.com/photo-1546833998-877b37c2e604?auto=format&fit=crop&q=80&w=300"
+const staggerContainer = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1
     }
-  ];
+  }
+};
 
+const cardVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  hover: { 
+    scale: 1.05,
+    transition: { duration: 0.2 }
+  }
+};
+
+export default function Remedies() {
   return (
     <div className="space-y-12">
       <motion.section 
         className="text-center space-y-4"
         {...fadeIn}
       >
-        <h1 className="text-4xl font-bold text-gray-900">Heart Health Remedies</h1>
+        <h1 className="text-4xl font-bold text-gray-900">Healthy Heart Remedies</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Discover lifestyle changes and natural remedies that can help improve your heart health
+          Discover diet plans, lifestyle changes, and prevention tips to maintain and improve your heart health
         </p>
       </motion.section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <motion.div 
+        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+        variants={staggerContainer}
+        initial="initial"
+        animate="animate"
+      >
         <motion.div 
           className="bg-white p-6 rounded-lg shadow-md"
-          whileHover={{ y: -5 }}
+          variants={cardVariants}
+          whileHover="hover"
         >
           <div className="flex items-center space-x-3 mb-4">
             <Utensils className="h-8 w-8 text-red-500" />
-            <h2 className="text-xl font-semibold">Healthy Diet</h2>
+            <h2 className="text-xl font-semibold">Foods to Include</h2>
           </div>
           <ul className="space-y-2 text-gray-600">
-            <li>• Increase intake of fruits and vegetables</li>
-            <li>• Choose whole grains over refined grains</li>
-            <li>• Limit saturated and trans fats</li>
-            <li>• Reduce sodium intake</li>
-            <li>• Include omega-3 rich foods</li>
+            {[
+              "Fruits and vegetables (aim for 5+ servings daily)",
+              "Whole grains (brown rice, whole wheat, oats)",
+              "Lean proteins (fish, poultry, legumes)",
+              "Healthy fats (olive oil, avocados, nuts)",
+              "Low-fat dairy products",
+              "Fatty fish rich in omega-3 (salmon, mackerel)",
+              "Seeds (flax, chia, hemp)",
+              "Herbs and spices instead of salt"
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </motion.div>
 
         <motion.div 
           className="bg-white p-6 rounded-lg shadow-md"
-          whileHover={{ y: -5 }}
+          variants={cardVariants}
+          whileHover="hover"
         >
           <div className="flex items-center space-x-3 mb-4">
-            <Walking className="h-8 w-8 text-red-500" />
-            <h2 className="text-xl font-semibold">Physical Activity</h2>
+            <XCircle className="h-8 w-8 text-red-500" />
+            <h2 className="text-xl font-semibold">Foods to Limit</h2>
           </div>
           <ul className="space-y-2 text-gray-600">
-            <li>• Aim for 150 minutes of moderate exercise weekly</li>
-            <li>• Include both cardio and strength training</li>
-            <li>• Take regular walking breaks</li>
-            <li>• Try swimming or cycling</li>
-            <li>• Practice yoga for stress reduction</li>
+            {[
+              "Processed and fast foods",
+              "Foods high in saturated and trans fats",
+              "Red meat and processed meats",
+              "Refined carbohydrates and added sugars",
+              "Excessive salt (sodium)",
+              "Sugary beverages and alcohol",
+              "Full-fat dairy products",
+              "Baked goods and fried foods"
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <XCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </motion.div>
 
         <motion.div 
           className="bg-white p-6 rounded-lg shadow-md"
-          whileHover={{ y: -5 }}
+          variants={cardVariants}
+          whileHover="hover"
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <Heart className="h-8 w-8 text-red-500" />
+            <h2 className="text-xl font-semibold">Recommended Diets</h2>
+          </div>
+          <ul className="space-y-4">
+            <li>
+              <h4 className="font-medium">Mediterranean Diet</h4>
+              <p className="text-sm text-gray-600">Emphasizes fruits, vegetables, whole grains, beans, nuts, and olive oil.</p>
+            </li>
+            <li>
+              <h4 className="font-medium">DASH Diet</h4>
+              <p className="text-sm text-gray-600">Designed to help lower blood pressure by limiting sodium, sweets, and red meats.</p>
+            </li>
+            <li>
+              <h4 className="font-medium">Flexitarian Diet</h4>
+              <p className="text-sm text-gray-600">Mostly plant-based with occasional meat consumption.</p>
+            </li>
+            <li>
+              <h4 className="font-medium">Nordic Diet</h4>
+              <p className="text-sm text-gray-600">Features fatty fish, berries, and whole grains.</p>
+            </li>
+          </ul>
+        </motion.div>
+      </motion.div>
+
+      <motion.section 
+        className="text-center space-y-4"
+        {...fadeIn}
+      >
+        <h2 className="text-3xl font-bold text-gray-900">Lifestyle Changes for Heart Health</h2>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Small changes in your daily routine can make a big difference in your heart health
+        </p>
+      </motion.section>
+
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        variants={staggerContainer}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md"
+          variants={cardVariants}
+          whileHover="hover"
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <Dumbbell className="h-8 w-8 text-red-500" />
+            <h2 className="text-xl font-semibold">Physical Activity</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Regular physical activity helps strengthen your heart, lower blood pressure, and improve cholesterol levels.
+          </p>
+          <h4 className="font-medium mb-2">Recommended:</h4>
+          <ul className="space-y-2 text-gray-600">
+            <li>• At least 150 minutes of moderate aerobic activity or 75 minutes of vigorous aerobic activity weekly</li>
+            <li>• Strength training exercises at least twice a week</li>
+            <li>• Breaking up sitting time with short activity breaks</li>
+          </ul>
+        </motion.div>
+
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md"
+          variants={cardVariants}
+          whileHover="hover"
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <Clock className="h-8 w-8 text-red-500" />
+            <h2 className="text-xl font-semibold">Stress Management</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Chronic stress can contribute to heart disease by raising blood pressure and leading to unhealthy coping behaviors.
+          </p>
+          <h4 className="font-medium mb-2">Effective techniques:</h4>
+          <ul className="space-y-2 text-gray-600">
+            <li>• Meditation and mindfulness practices</li>
+            <li>• Deep breathing exercises</li>
+            <li>• Yoga or tai chi</li>
+            <li>• Progressive muscle relaxation</li>
+            <li>• Spending time in nature</li>
+          </ul>
+        </motion.div>
+
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md"
+          variants={cardVariants}
+          whileHover="hover"
         >
           <div className="flex items-center space-x-3 mb-4">
             <Moon className="h-8 w-8 text-red-500" />
-            <h2 className="text-xl font-semibold">Lifestyle Changes</h2>
+            <h2 className="text-xl font-semibold">Sleep Quality</h2>
           </div>
+          <p className="text-gray-600 mb-4">
+            Poor sleep quality is linked to high blood pressure, insulin resistance, and heart disease.
+          </p>
+          <h4 className="font-medium mb-2">Recommendations:</h4>
           <ul className="space-y-2 text-gray-600">
-            <li>• Get adequate sleep (7-9 hours)</li>
-            <li>• Manage stress through meditation</li>
-            <li>• Maintain a healthy weight</li>
-            <li>• Monitor blood pressure regularly</li>
-            <li>• Stay hydrated</li>
+            <li>• Aim for 7-9 hours of quality sleep each night</li>
+            <li>• Maintain a consistent sleep schedule</li>
+            <li>• Create a relaxing bedtime routine</li>
+            <li>• Keep your bedroom cool, dark, and quiet</li>
+            <li>• Limit screen time before bed</li>
           </ul>
         </motion.div>
-      </div>
+
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md"
+          variants={cardVariants}
+          whileHover="hover"
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <Calendar className="h-8 w-8 text-red-500" />
+            <h2 className="text-xl font-semibold">Regular Check-ups</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Regular health check-ups help monitor and control risk factors for heart disease.
+          </p>
+          <h4 className="font-medium mb-2">Key screenings:</h4>
+          <ul className="space-y-2 text-gray-600">
+            <li>• Blood pressure (at least yearly)</li>
+            <li>• Cholesterol levels (every 4-6 years for average risk adults)</li>
+            <li>• Blood glucose levels</li>
+            <li>• Body mass index (BMI)</li>
+            <li>• Waist circumference</li>
+          </ul>
+        </motion.div>
+      </motion.div>
 
       <motion.section 
-        className="bg-white p-8 rounded-lg shadow-md"
+        className="bg-red-50 p-8 rounded-lg"
         {...fadeIn}
       >
-        <h2 className="text-2xl font-bold mb-6">Heart-Healthy Indian Recipes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {indianFoods.map((food, index) => (
+        <h2 className="text-3xl font-bold text-center mb-8">Quick Prevention Tips</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {[
+            { tip: "Don't smoke or use tobacco", icon: <XCircle className="h-8 w-8 text-red-500" /> },
+            { tip: "Maintain a healthy weight", icon: <Activity className="h-8 w-8 text-red-500" /> },
+            { tip: "Get regular health screenings", icon: <Calendar className="h-8 w-8 text-red-500" /> },
+            { tip: "Eat a heart-healthy diet", icon: <Utensils className="h-8 w-8 text-red-500" /> },
+            { tip: "Exercise regularly", icon: <Dumbbell className="h-8 w-8 text-red-500" /> },
+            { tip: "Get enough quality sleep", icon: <Moon className="h-8 w-8 text-red-500" /> },
+            { tip: "Manage stress", icon: <Clock className="h-8 w-8 text-red-500" /> },
+            { tip: "Limit alcohol consumption", icon: <XCircle className="h-8 w-8 text-red-500" /> },
+            { tip: "Monitor blood pressure", icon: <Activity className="h-8 w-8 text-red-500" /> },
+          ].map((item, index) => (
             <motion.div 
-              key={index}
-              className="bg-white rounded-lg overflow-hidden shadow-md"
-              whileHover={{ scale: 1.02 }}
+              key={index} 
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
             >
-              <img
-                src={food.image}
-                alt={food.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{food.name}</h3>
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-gray-700">Benefits:</p>
-                  <ul className="text-sm text-gray-600">
-                    {food.benefits.map((benefit, i) => (
-                      <li key={i}>• {benefit}</li>
-                    ))}
-                  </ul>
-                  <p className="text-sm text-gray-600 mt-2">
-                    <span className="font-medium">Recipe:</span> {food.recipe}
-                  </p>
-                </div>
-              </div>
+              {item.icon}
+              <p className="mt-2 font-medium text-gray-700">{item.tip}</p>
             </motion.div>
           ))}
-        </div>
-      </motion.section>
-
-      <motion.section 
-        className="bg-white p-8 rounded-lg shadow-md"
-        {...fadeIn}
-      >
-        <h2 className="text-2xl font-bold mb-6">Habits to Avoid</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-start space-x-3">
-            <Cigarette className="h-6 w-6 text-red-500 mt-1" />
-            <div>
-              <h3 className="font-semibold mb-2">Quit Smoking</h3>
-              <p className="text-gray-600">Smoking increases risk of heart disease and stroke</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <Coffee className="h-6 w-6 text-red-500 mt-1" />
-            <div>
-              <h3 className="font-semibold mb-2">Limit Caffeine</h3>
-              <p className="text-gray-600">Excessive caffeine can increase blood pressure</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <Heart className="h-6 w-6 text-red-500 mt-1" />
-            <div>
-              <h3 className="font-semibold mb-2">Avoid Stress</h3>
-              <p className="text-gray-600">Chronic stress contributes to heart problems</p>
-            </div>
-          </div>
         </div>
       </motion.section>
     </div>
