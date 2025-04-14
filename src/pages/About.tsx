@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Award, Users, Brain, Github, Linkedin } from 'lucide-react';
+import { Heart, Award, Users, Brain, Github, Linkedin, HeartPulse, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const fadeIn = {
@@ -11,6 +11,45 @@ const fadeIn = {
 export default function About() {
   return (
     <div className="space-y-12">
+      <motion.div
+        className="flex justify-center mb-12"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="relative">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 10, -10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+            className="relative"
+          >
+            <Shield className="h-24 w-24 text-red-500" />
+          </motion.div>
+          <motion.div
+            className="absolute -top-2 -right-2"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, -10, 10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.3
+            }}
+          >
+            <HeartPulse className="h-12 w-12 text-red-400" />
+          </motion.div>
+        </div>
+      </motion.div>
+
       <motion.section 
         className="text-center space-y-4"
         variants={fadeIn}

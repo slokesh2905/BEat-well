@@ -1,10 +1,49 @@
 import React from 'react';
-import { MapPin, Phone, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, ExternalLink, Stethoscope, HeartPulse } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Consultation() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <motion.div
+        className="flex justify-center mb-12"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="relative">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 10, -10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+            className="relative"
+          >
+            <Stethoscope className="h-24 w-24 text-red-500" />
+          </motion.div>
+          <motion.div
+            className="absolute -top-2 -right-2"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, -10, 10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.3
+            }}
+          >
+            <HeartPulse className="h-12 w-12 text-red-400" />
+          </motion.div>
+        </div>
+      </motion.div>
+
       <div className="text-center mb-10">
         <h1 className="text-3xl font-bold mb-4">Find Cardiologists Near You</h1>
         <p className="text-gray-600 max-w-2xl mx-auto">

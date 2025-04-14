@@ -42,13 +42,42 @@ const Exercises: React.FC = () => {
         {...fadeIn}
       >
         <motion.div
-          className="flex justify-center mb-6"
-          animate={{
-            scale: [1, 1.05, 1],
-            transition: { duration: 2, repeat: Infinity }
-          }}
+          className="flex justify-center mb-12"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          <Dumbbell className="h-16 w-16 text-red-500" />
+          <div className="relative">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className="relative"
+            >
+              <Dumbbell className="h-24 w-24 text-red-500" />
+            </motion.div>
+            <motion.div
+              className="absolute -top-2 -right-2"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, -10, 10, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0.3
+              }}
+            >
+              <Heart className="h-12 w-12 text-red-400" />
+            </motion.div>
+          </div>
         </motion.div>
         <h1 className="text-4xl font-bold text-gray-900">Heart-Healthy Exercises</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -77,7 +106,7 @@ const Exercises: React.FC = () => {
         
         <TabsContent value="cardio">
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
@@ -85,6 +114,7 @@ const Exercises: React.FC = () => {
             {[
               {
                 title: "Walking",
+                image: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "Low",
                 description: "Walking is one of the simplest and most accessible forms of exercise. It's perfect for beginners and those recovering from illness.",
                 benefits: ["Improves circulation", "Lowers blood pressure", "Strengthens the heart", "Low impact on joints"],
@@ -92,6 +122,7 @@ const Exercises: React.FC = () => {
               },
               {
                 title: "Swimming",
+                image: "https://images.unsplash.com/photo-1600965962102-9d260a71890d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "Low to Moderate",
                 description: "Swimming is excellent for cardiovascular health with minimal impact on joints, making it ideal for those with arthritis or joint issues.",
                 benefits: ["Full-body workout", "Improves lung capacity", "Builds endurance", "Gentle on joints"],
@@ -99,6 +130,7 @@ const Exercises: React.FC = () => {
               },
               {
                 title: "Cycling",
+                image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "Moderate",
                 description: "Cycling, either outdoors or on a stationary bike, provides excellent cardiovascular benefits while being low-impact.",
                 benefits: ["Strengthens leg muscles", "Improves heart health", "Burns calories efficiently", "Low impact exercise"],
@@ -106,6 +138,7 @@ const Exercises: React.FC = () => {
               },
               {
                 title: "Dancing",
+                image: "https://images.unsplash.com/photo-1519925610903-381054cc2a1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "Moderate",
                 description: "Dancing is a fun way to improve heart health while enjoying music. It also enhances balance, coordination, and mood.",
                 benefits: ["Improves coordination", "Enhances mood", "Burns calories", "Strengthens muscles"],
@@ -113,6 +146,7 @@ const Exercises: React.FC = () => {
               },
               {
                 title: "Jogging/Running",
+                image: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "Moderate to High",
                 description: "Jogging and running are highly effective for cardiovascular fitness but require proper technique to avoid injury.",
                 benefits: ["Highly efficient workout", "Improves bone density", "Enhances lung capacity", "Can be done anywhere"],
@@ -120,6 +154,7 @@ const Exercises: React.FC = () => {
               },
               {
                 title: "HIIT (High-Intensity Interval Training)",
+                image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 intensity: "High",
                 description: "HIIT alternates between intense activity and rest periods, maximizing cardiovascular benefits in shorter time frames.",
                 benefits: ["Time-efficient", "Burns calories even after workout", "Improves oxygen consumption", "Reduces heart rate and blood pressure"],
@@ -130,9 +165,16 @@ const Exercises: React.FC = () => {
                 key={index}
                 variants={cardVariants}
                 whileHover="hover"
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
               >
-                <div className="p-6">
+                <div className="relative h-64 w-full overflow-hidden">
+                  <img 
+                    src={exercise.image} 
+                    alt={exercise.title}
+                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6 flex-1">
                   <div className="flex items-center space-x-3 mb-4">
                     <Dumbbell className="h-8 w-8 text-red-500" />
                     <h2 className="text-xl font-semibold text-gray-900">{exercise.title}</h2>
@@ -245,7 +287,7 @@ const Exercises: React.FC = () => {
         
         <TabsContent value="breathing">
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
@@ -308,9 +350,9 @@ const Exercises: React.FC = () => {
                 key={index}
                 variants={cardVariants}
                 whileHover="hover"
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
               >
-                <div className="p-6">
+                <div className="p-6 flex-1">
                   <div className="flex items-center space-x-3 mb-4">
                     <Wind className="h-8 w-8 text-red-500" />
                     <h2 className="text-xl font-semibold text-gray-900">{technique.title}</h2>

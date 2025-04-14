@@ -258,6 +258,45 @@ export default function Prediction() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-[1400px]">
+      <motion.div
+        className="flex justify-center mb-12"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="relative">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 10, -10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+            className="relative"
+          >
+            <Activity className="h-24 w-24 text-red-500" />
+          </motion.div>
+          <motion.div
+            className="absolute -top-2 -right-2"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, -10, 10, 0]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.3
+            }}
+          >
+            <Heart className="h-12 w-12 text-red-400" />
+          </motion.div>
+        </div>
+      </motion.div>
+
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900">Heart Disease Risk Prediction</h1>
         <p className="text-xl text-gray-600 mt-2">

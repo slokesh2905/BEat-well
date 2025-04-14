@@ -41,13 +41,42 @@ const InfoPage: React.FC = () => {
         {...fadeIn}
       >
         <motion.div
-          className="flex justify-center mb-6"
-          animate={{
-            scale: [1, 1.05, 1],
-            transition: { duration: 2, repeat: Infinity }
-          }}
+          className="flex justify-center mb-12"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          <Heart className="h-16 w-16 text-red-500" />
+          <div className="relative">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className="relative"
+            >
+              <Info className="h-24 w-24 text-red-500" />
+            </motion.div>
+            <motion.div
+              className="absolute -top-2 -right-2"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, -10, 10, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0.3
+              }}
+            >
+              <Heart className="h-12 w-12 text-red-400" />
+            </motion.div>
+          </div>
         </motion.div>
         <h1 className="text-4xl font-bold text-gray-900">Heart Disease Information</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">

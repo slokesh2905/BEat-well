@@ -13,13 +13,14 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import DiseaseInfo from './pages/DiseaseInfo';
 import InfoPage from './pages/InfoPage';
-import ChatBot from './components/ChatBot';
 import { AuthProvider } from './contexts/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <Navbar />
           <main className="container mx-auto px-4 py-8 flex-grow">
@@ -38,7 +39,6 @@ function App() {
             </Routes>
           </main>
           <Footer />
-          <ChatBot />
         </div>
       </Router>
     </AuthProvider>
